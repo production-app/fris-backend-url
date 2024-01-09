@@ -1,0 +1,183 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require("../app");
+const cors = require("cors");
+var debug = require("debug")("node-blobs-image-resize:server");
+var http = require("http");
+const {
+  sequelize,
+  initiModels,
+  Sequelize,
+  Feeds,
+  FRISHOD,
+  feedsadminlogs,
+} = require("../models");
+const socketIO = require("socket.io");
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || "5000");
+app.set("port", 5000);
+
+/**
+ * Create HTTP server.
+ */
+
+const server = http.createServer(app);
+
+const io = socketIO(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+// io.on("connection", (socket) => {
+//   console.log("New client connected" + socket.id);
+
+//   socket.on("initial_data", async () => {
+//     const feed = await Feeds.findAll({
+//       attributes: [
+//         // specify an array where the first element is the SQL function and the second is the alias
+//         [
+//           Sequelize.fn("DISTINCT", Sequelize.col("control_number")),
+//           "control_number",
+//         ],
+//         "countRequests",
+//         "approver_email",
+//         "read",
+//         "requester_email",
+//       ],
+//     });
+//     io.sockets.emit("get_data", feed);
+//   });
+
+//   socket.on("post_data", async (payload) => {
+//     // console.log("control_Number", body, sender_email, receiver_email);
+
+//     //console.log(payload.number_items);
+
+//     const approverEmailAddress = await FRISHOD.findOne({
+//       attributes: ["email"],
+//       where: {
+//         fullnames: payload.parsedLocalStorageApprover,
+//       },
+//     });
+
+//     const postFeeds = await Feeds.create({
+//       control_number: payload.controlNumber,
+//       approver_email: approverEmailAddress.email,
+//       requester_email: payload.userEmail,
+//       countRequests: payload.number_items,
+//       uuid: payload.uuid,
+//     });
+
+//     // io.sockets.emit("change_data");
+//   });
+
+//   socket.on("post_adminlogs", async (payload) => {
+//     // console.log("control_Number", body, sender_email, receiver_email);
+
+//     //console.log(payload.number_items);
+
+//     const approverEmailAddress = await FRISHOD.findOne({
+//       attributes: ["email"],
+//       where: {
+//         fullnames: payload.parsedLocalStorageApprover,
+//       },
+//     });
+
+//     const postFeeds = await feedsadminlogs.create({
+//       control_number: payload.controlNumber,
+//       approver_email: approverEmailAddress.email,
+//       requester_email: payload.userEmail,
+//       countRequests: payload.number_items,
+//       uuid: payload.uuid,
+//     });
+
+//     // io.sockets.emit("change_data");
+//   });
+
+//   socket.on("user_email", (payload) => {
+//     console.log("User Email", payload);
+//   });
+
+//   socket.on("disconnect", () => {
+//     console.log("user disconnected");
+//   });
+// });
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+try {
+  server.listen(port, async () => {
+    await sequelize.authenticate();
+    console.log("DB Connected", port);
+  });
+} catch (error) {
+  server.on("error", onError);
+  server.on("listening", onListening);
+}
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+
+  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+}

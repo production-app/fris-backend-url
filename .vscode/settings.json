@@ -1,0 +1,5 @@
+{
+  "editor.tabCompletion": "on",
+  "appService.defaultWebAppToDeploy": "/subscriptions/0957bddf-539e-48db-bae2-0317d5d05bdc/resourceGroups/FirstReg/providers/Microsoft.Web/sites/frisbackendapis",
+  "appService.deploySubpath": "."
+}
