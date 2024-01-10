@@ -4732,11 +4732,24 @@ router.post("/confirmapprove", authOnly, async (req, res) => {
 
     //let mailList = ["abioadex2000@yahoo.com", "abioadex2000@gmail.com"];
 
-    let mailList = [
-      "abiola.taiwo@firstregistrarsnigeria.com",
-      "olugbenga.ariyo@firstregistrarsnigeria.com",
-      "abiodun.shehu@firstregistrarsnigeria.com",
-    ];
+    let mailList = [];
+
+    await Userprofiles.findAll({
+      attributes: ["email", "uuid", "name"],
+      where: {
+        role: "admin",
+      },
+    }).then((data) => {
+      data.forEach((data) => {
+        mailList.push(data.dataValues.email);
+      });
+    });
+
+    // let mailList = [
+    //   "abiola.taiwo@firstregistrarsnigeria.com",
+    //   "olugbenga.ariyo@firstregistrarsnigeria.com",
+    //   "abiodun.shehu@firstregistrarsnigeria.com",
+    // ];
 
     await transporter.sendMail({
       from: `"First Registrars Portal"  <info@firstregistrarsnigeria.com>`, // "info@firstregistrarsnigeria.com", // sender address
@@ -8098,6 +8111,15 @@ router.post("/confirmapprove", authOnly, async (req, res) => {
     console.log("2", error);
   }
 });
+
+// router.get("/alladmin", async (req, res) => {
+//   try {
+
+//     return res.status(200).json({
+//       // data: getAdmin,
+//     });
+//   } catch (error) {}
+// });
 
 router.post("/confirmreject", authReject, async (req, res) => {
   try {
