@@ -8112,14 +8112,13 @@ router.post("/confirmapprove", authOnly, async (req, res) => {
   }
 });
 
-// router.get("/alladmin", async (req, res) => {
-//   try {
-
-//     return res.status(200).json({
-//       // data: getAdmin,
-//     });
-//   } catch (error) {}
-// });
+router.get("/alladmin", async (req, res) => {
+  try {
+    return res.status(200).json({
+      data: "Hello",
+    });
+  } catch (error) {}
+});
 
 router.post("/confirmreject", authReject, async (req, res) => {
   try {
