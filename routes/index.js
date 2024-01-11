@@ -11291,8 +11291,18 @@ router.put("/sharepoint/approve/:controls", async (req, res) => {
     });
 
     // // send mail to the Admin
+    let mailList = [];
 
-    let mailList = ["abioadex2000@yahoo.com", "abioadex2000@gmail.com"];
+    await Userprofiles.findAll({
+      attributes: ["email", "uuid", "name"],
+      where: {
+        role: "admin",
+      },
+    }).then((data) => {
+      data.forEach((data) => {
+        mailList.push(data.dataValues.email);
+      });
+    });
 
     // let mailList = ["abiola.taiwo@firstregistrarsnigeria.com", "olugbenga.ariyo@firstregistrarsnigeria.com", "abiodun.shehu@firstregistrarsnigeria.com"];
 
@@ -19243,11 +19253,18 @@ router.put("/requestlog/:controls", async (req, res) => {
 
     //let mailList = ["abioadex2000@yahoo.com", "abioadex2000@gmail.com"];
 
-    let mailList = [
-      "abiola.taiwo@firstregistrarsnigeria.com",
-      "olugbenga.ariyo@firstregistrarsnigeria.com",
-      "abiodun.shehu@firstregistrarsnigeria.com",
-    ];
+    let mailList = [];
+
+    await Userprofiles.findAll({
+      attributes: ["email", "uuid", "name"],
+      where: {
+        role: "admin",
+      },
+    }).then((data) => {
+      data.forEach((data) => {
+        mailList.push(data.dataValues.email);
+      });
+    });
 
     await transporter.sendMail({
       from: `"First Registrars Portal"  <info@firstregistrarsnigeria.com>`, // "info@firstregistrarsnigeria.com", // sender address
