@@ -17746,6 +17746,8 @@ router.put("/globalroles/:id", async (req, res) => {
   try {
     let uuid = req.params.id;
 
+    const { role, email, name } = req.body;
+
     if (role === "manager") {
       await FRISHOD.create({
         fullnames: name,
