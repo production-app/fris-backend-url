@@ -19274,7 +19274,7 @@ router.put("/requestlog/:controls", async (req, res) => {
       //replyTo: "noreply@firstregistrarsnigeria.com",
       priority: "high",
       html: `
-     <!DOCTYPE html>
+   <!DOCTYPE html>
 
 <html
   lang="en"
@@ -19333,6 +19333,10 @@ router.put("/requestlog/:controls", async (req, res) => {
         display: none;
         max-height: 0px;
         overflow: hidden;
+      }
+
+      .portal {
+        color: "red";
       }
 
       .image_block img + div {
@@ -19759,8 +19763,8 @@ router.put("/requestlog/:controls", async (req, res) => {
                                   >
                                     <span class="tinyMce-placeholder"
                                       >Please be advised that the request with
-                                      Control Number # - ${control}
-                                      from this requester  ${requesterNamed} has been
+                                      Control Number # - ${control} from this
+                                      requester  ${requesterNamed} has been
                                       logged for your review and action.</span
                                     >
                                   </h3>
@@ -19808,7 +19812,19 @@ router.put("/requestlog/:controls", async (req, res) => {
                                   >
                                     <span class="tinyMce-placeholder"
                                       >To handle the request, please go to the
-                                      portal.</span
+                                      <a
+                                        style="
+                                          color: white;
+                                          background-color: #0068a5;
+                                          padding: 3px;
+                                          border-radius: 7px;
+                                          text-decoration: none;
+                                        "
+                                        href="https://portal.firstregistrarsapi.com/"
+                                        target="_blank"
+                                      >
+                                        portal
+                                      </a></span
                                     >
                                   </h3>
                                 </td>
@@ -20214,6 +20230,7 @@ router.put("/requestlog/:controls", async (req, res) => {
     <!-- End -->
   </body>
 </html>
+
 
 
            `,
