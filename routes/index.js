@@ -26342,7 +26342,7 @@ router.get("/ip", async (req, res) => {
 
   res.status(200);
   res.header("Content-Type", "application/json");
-  res.end(JSON.stringify({ status: "OK" }));
+  res.end(JSON.stringify({ status: geo, ip: req.ip }));
 });
 
 module.exports = router;
