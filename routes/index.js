@@ -26338,7 +26338,7 @@ router.get("/ip", async (req, res) => {
   console.log("Country: " + (geo ? geo.country : "Unknown"));
   console.log("Region: " + (geo ? geo.region : "Unknown"));
 
-  console.log(geo);
+  console.log(geo, req.ip);
 
   res.status(200);
   res.header("Content-Type", "application/json");
