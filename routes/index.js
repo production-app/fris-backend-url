@@ -58,6 +58,7 @@ const uploadStrategy = multer({ storage: inMemoryStorage }).array("file", 4);
 const nodemailer = require("nodemailer");
 const moment = require("moment-business-days");
 const jwt = require("jsonwebtoken");
+const geoip = require("geoip-lite");
 
 //Business Days   holidayFormat: 'MM-DD-YYYY'
 var newYearDay = "01-01-2023";
@@ -26324,6 +26325,24 @@ router.delete("/rollback", async (req, res) => {
   } catch (error) {
     return res.status(400).json({ message: error });
   }
+});
+
+router.get("/ip", async (req, res) => {
+  console.log("Headers: " + JSON.stringify(req.headers));
+  console.log("IP: " + JSON.stringify(req.ip));
+
+  var geo = geoip.lookup(req.ip);
+
+  console.log("Browser: " + req.headers["user-agent"]);
+  console.log("Language: " + req.headers["accept-language"]);
+  console.log("Country: " + (geo ? geo.country : "Unknown"));
+  console.log("Region: " + (geo ? geo.region : "Unknown"));
+
+  console.log(geo);
+
+  res.status(200);
+  res.header("Content-Type", "application/json");
+  res.end(JSON.stringify({ status: "OK" }));
 });
 
 module.exports = router;
