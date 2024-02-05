@@ -917,14 +917,15 @@ router.post("/rejectedlogs/", async (req, res) => {
 
 router.post("/uploadfiles", upload.single("file"), async (req, res) => {
   try {
+    let uuid = "$uuf4uf8494f4";
     const itemsCollected = [];
+
     let vendorsTable = [];
     //console.log("hrhfe", __basedir);
-    await fs
-      .createReadStream(__basedir + "/uploads/" + req.file.filename)
+    fs.createReadStream(__basedir + "/uploads/" + req.file.filename)
       .pipe(csv.parse({ headers: true }))
       .on("error", (error) => {
-        console.error(error);
+        // console.error(error);
         throw error.message;
       })
       .on("data", (row) => {
@@ -955,6 +956,7 @@ router.post("/uploadfiles", upload.single("file"), async (req, res) => {
         // console.log(vendorsTable);
       });
   } catch (error) {
+    console.log(error);
     const result = {
       status: "fail",
       filename: req.file.originalname,
@@ -23613,7 +23615,7 @@ router.post("/consumables/add", async (req, res) => {
       items,
       stock_in,
       stock_out: 0,
-      balance: 0,
+      balance: stock_in,
     });
 
     return res.status(200).json({ data: "completed" });
@@ -26327,22 +26329,22 @@ router.delete("/rollback", async (req, res) => {
   }
 });
 
-router.get("/ip", async (req, res) => {
-  console.log("Headers: " + JSON.stringify(req.headers));
-  console.log("IP: " + JSON.stringify(req.ip));
+// router.get("/ip", async (req, res) => {
+//   console.log("Headers: " + JSON.stringify(req.headers));
+//   console.log("IP: " + JSON.stringify(req.ip));
 
-  var geo = geoip.lookup(req.ip);
+//   var geo = geoip.lookup(req.ip);
 
-  console.log("Browser: " + req.headers["user-agent"]);
-  console.log("Language: " + req.headers["accept-language"]);
-  console.log("Country: " + (geo ? geo.country : "Unknown"));
-  console.log("Region: " + (geo ? geo.region : "Unknown"));
+//   console.log("Browser: " + req.headers["user-agent"]);
+//   console.log("Language: " + req.headers["accept-language"]);
+//   console.log("Country: " + (geo ? geo.country : "Unknown"));
+//   console.log("Region: " + (geo ? geo.region : "Unknown"));
 
-  console.log(geo, req.ip);
+//   console.log(geo, req.ip);
 
-  res.status(200);
-  res.header("Content-Type", "application/json");
-  res.end(JSON.stringify({ status: geo, ip: req.ip }));
-});
+//   res.status(200);
+//   res.header("Content-Type", "application/json");
+//   res.end(JSON.stringify({ status: geo, ip: req.ip }));
+// });
 
 module.exports = router;
