@@ -23631,7 +23631,9 @@ router.get("/requestlog/:approver", async (req, res) => {
     const requestLogs = await ControlidLogs.findAll({
       where: {
         status: "PENDING",
-        aproval_name: approver,
+        aproval_name: {
+          [Op.like]: `%${approver}%`,
+        },
       },
     });
 
@@ -23652,7 +23654,9 @@ router.get("/pendinglogs/:requester", async (req, res) => {
     const requestLogs = await ControlidLogs.findAll({
       where: {
         status: "PENDING",
-        requester_name: requester,
+        requester_name: {
+          [Op.like]: `%${requester}%`,
+        },
       },
       order: [["createdAt", "DESC"]],
     });
@@ -23732,7 +23736,7 @@ router.get("/releasedlogs/:requester", async (req, res) => {
         status: {
           [Sequelize.Op.in]: ["RELEASED", "PICKED-UP"],
         },
-        requester_name: requester,
+        // requester_name: requester,
       },
 
       order: [["createdAt", "DESC"]],
