@@ -23728,10 +23728,8 @@ router.get("/treatedlogs/:requester", async (req, res) => {
   }
 });
 
-router.get("/releasedlogs/:requester", async (req, res) => {
+router.get("/releasedlogs/", async (req, res) => {
   try {
-    const requester = req.params.requester;
-
     const requestLogs = await ControlidLogs.findAll({
       where: {
         status: {
@@ -23764,6 +23762,35 @@ router.get("/requesttreatedlog", async (req, res) => {
     const requestLogs = await ControlidLogs.findAll({
       where: {
         status: "TREATED",
+      },
+      include: [
+        {
+          model: requistionLogs,
+        },
+      ],
+      order: [["updatedAt", "DESC"]],
+    });
+
+    // console.log(consumablesList[0].consumables.dataValues.items);
+
+    return res.status(200).json({ data: requestLogs });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      data: error,
+    });
+  }
+});
+
+router.get("/requesttreatedlog/:approver", async (req, res) => {
+  try {
+    const approver = req.params.approver;
+    const requestLogs = await ControlidLogs.findAll({
+      where: {
+        status: "TREATED",
+        aproval_name: {
+          [Op.like]: `%${approver}%`,
+        },
       },
       include: [
         {
