@@ -2850,36 +2850,6 @@ router.post("/requisitions", async (req, res) => {
       `, // html body
     });
 
-    // Sharepoints List API
-
-    //https://frisportalsigninapi.azurewebsites.net/v1/
-
-    // await axios.post(
-    //   "https://frisportalsigninapi.azurewebsites.net/v1/sharepoint",
-    //   {
-    //     control_number,
-    //     manager_email: getManagerEmail.email,
-    //     requester_name,
-    //     manager,
-    //     items: JSON.stringify(pushRecords)
-    //       .replace(/[{("")}]/g, "")
-    //       .replace(/[\[\]']+/g, "")
-    //       .replace(/,/g, " | "),
-    //   },
-    //   {
-    //     headers: {
-    //       // authtoken: idTokenResult.token,
-    //       accesstoken: token,
-    //     },
-    //   }
-    // );
-
-    // await request.post("http://localhost:4000/v1/sharepoint", {});
-
-    // Send Approver Mail
-
-    //${getManagerEmail.email}
-
     await transporter.sendMail({
       from: `"First Registrars Portal"  <info@firstregistrarsnigeria.com>`, // "info@firstregistrarsnigeria.com", // sender address
       to: `${getManagerEmail.email}`, // list of receivers // `${getManagerEmail.email}`
@@ -21725,12 +21695,12 @@ router.put("/releasedlog/:controls", async (req, res) => {
 
     let pushRecord = [];
 
-    const { status } = req.body;
+    const { status, admin_approver } = req.body;
 
     // console.log(status);
 
     await ControlidLogs.update(
-      { status, updatedAt: Date.now() },
+      { status, updatedAt: Date.now(), admin_approver },
       {
         where: {
           control_number: control,
@@ -23620,7 +23590,6 @@ router.post("/consumables/add", async (req, res) => {
 
     return res.status(200).json({ data: "completed" });
   } catch (error) {
-    console.log(error);
     return res.status(404).json({ err: error });
   }
 });
@@ -23728,7 +23697,7 @@ router.get("/treatedlogs/:requester", async (req, res) => {
   }
 });
 
-router.get("/releasedlogs/", async (req, res) => {
+router.get("/releasedlogs", async (req, res) => {
   try {
     const requestLogs = await ControlidLogs.findAll({
       where: {
@@ -23905,7 +23874,8 @@ router.put("/getstocks/:id", async (req, res) => {
 
     //console.log("H");
 
-    const { admin_status, quantity, items, requester } = req.body;
+    const { admin_status, quantity, items, requester, admin_approver } =
+      req.body;
 
     //businessSubtract(3)
 
@@ -23918,6 +23888,7 @@ router.put("/getstocks/:id", async (req, res) => {
         admin_status,
         button_ui_administrator: true,
         quantity,
+        admin_approver,
         expirationDate: moment(new Date(), "DD-MM-YYYY").businessSubtract(2)._d,
       },
       {

@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       approval_name: DataTypes.STRING,
       requester_name: DataTypes.STRING,
       countRequests: DataTypes.STRING,
+      admin_approver: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       sequelize,
