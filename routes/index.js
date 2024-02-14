@@ -23602,7 +23602,7 @@ router.get("/requestlog/:approver", async (req, res) => {
       where: {
         status: "PENDING",
         approval_name: {
-          [Op.substring]: `${approver}`,
+          [Op.like]: `%${approver}%`,
         },
       },
     });
@@ -23758,7 +23758,7 @@ router.get("/requesttreatedlog/:approver", async (req, res) => {
       where: {
         status: "TREATED",
         approval_name: {
-          [Op.substring]: `${approver}`,
+          [Op.like]: `%${approver}%`,
         },
       },
       include: [
