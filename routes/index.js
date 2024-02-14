@@ -23601,7 +23601,7 @@ router.get("/requestlog/:approver", async (req, res) => {
     const requestLogs = await ControlidLogs.findAll({
       where: {
         status: "PENDING",
-        aproval_name: {
+        approval_name: {
           [Op.substring]: `${approver}`,
         },
       },
@@ -23757,7 +23757,7 @@ router.get("/requesttreatedlog/:approver", async (req, res) => {
     const requestLogs = await ControlidLogs.findAll({
       where: {
         status: "TREATED",
-        aproval_name: {
+        approval_name: {
           [Op.substring]: `${approver}`,
         },
       },
