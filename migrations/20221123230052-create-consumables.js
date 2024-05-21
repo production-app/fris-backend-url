@@ -60,6 +60,13 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+
+      status_qty: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
+
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,

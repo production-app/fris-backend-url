@@ -73,6 +73,9 @@ module.exports = {
       remarks: {
         type: Sequelize.STRING,
       },
+      department: {
+        type: Sequelize.STRING,
+      },
       status: {
         type: Sequelize.STRING,
         defaultValue: "PENDING",

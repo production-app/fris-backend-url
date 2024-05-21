@@ -1033,6 +1033,7 @@ router.post("/requisitions", async (req, res) => {
       // quantity,
       control_number,
       token,
+      department,
       count_of_items,
       requester_name,
     } = req.body;
@@ -1073,6 +1074,7 @@ router.post("/requisitions", async (req, res) => {
         user_quantity: item.quantity,
         quantity: item.quantity,
         manager,
+        department,
         manager_email: getManagerEmail.email,
         requester_email,
         control_number,

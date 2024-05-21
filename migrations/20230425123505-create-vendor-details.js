@@ -40,6 +40,12 @@ module.exports = {
         type: Sequelize.UUID,
         // defaultValue: Sequelize.UUIDV4,
       },
+      status_qty: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
+
       items: {
         type: Sequelize.STRING,
       },

@@ -8,10 +8,10 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    await queryInterface.addColumn("vendorDetails", "status_qty", {
-      type: Sequelize.BOOLEAN,
+    await queryInterface.addColumn("requistionLogs", "department", {
+      type: Sequelize.STRING,
       allowNull: true,
-      defaultValue: false,
+      defaultValue: null,
     });
   },
 

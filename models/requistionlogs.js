@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       requester_email: DataTypes.STRING,
+      department: DataTypes.STRING,
       requester_name: DataTypes.STRING,
       count_of_items: DataTypes.STRING,
       button_ui: {

@@ -61,9 +61,11 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
+
       status_qty: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
+        defaultValue: false,
       },
     },
     {
