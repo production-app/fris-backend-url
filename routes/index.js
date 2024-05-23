@@ -26321,15 +26321,16 @@ router.delete("/rollback", async (req, res) => {
   try {
     let deleteRecords = await consumables.destroy({
       where: {},
-      truncate: true,
+      //  truncate: true,
     });
 
-    console.log(deleteRecords);
+    // console.log(deleteRecords);
 
     return res.status(200).json({
       data: "All Delete",
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).json({ message: error });
   }
 });
