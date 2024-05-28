@@ -2852,6 +2852,7 @@ router.post("/requisitions", async (req, res) => {
       `, // html body
     });
 
+    ///
     await transporter.sendMail({
       from: `"First Registrars Portal"  <info@firstregistrarsnigeria.com>`, // "info@firstregistrarsnigeria.com", // sender address
       to: `${getManagerEmail.email}`, // list of receivers // `${getManagerEmail.email}`
@@ -23838,23 +23839,12 @@ router.get("/getstocks/:control", async (req, res) => {
     });
 
     allRequestStock = await requistionLogs.findAll({
-      // attributes: [
-      //   "items",
-      //   "quantity",
-      //   "requester_name",
-      //   "manager",
-      //   "uuid",
-      //   "button_ui_admin",
-      //   "status",
-      //   "id",
-      //   "admin_qty",
-      //   "createdAt",
-      // ],
       where: {
         items: {
           [Sequelize.Op.in]: itemCollection,
         },
         control_number: control_id,
+        status: "APPROVED",
       },
       include: [
         {
